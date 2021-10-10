@@ -50,7 +50,7 @@
             (let ((*web-worker-output-class* "jqconsole-error"))
               (clear-buffer)
               (format t "ERROR: ")
-              (apply #'format t (!condition-args err))
+              (apply #'format t (simple-condition-format-control err) (car (simple-condition-format-arguments err)))
               (terpri)))))
       (catch (err)
         (let (((*web-worker-output-class* "jqconsole-error"))

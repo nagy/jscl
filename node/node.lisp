@@ -32,7 +32,7 @@
                         (print result)))
                   (error (err)
                     (format t "ERROR: ")
-                    (apply #'format t (!condition-args err))
+                    (apply #'format t (simple-condition-format-control err) (simple-condition-format-arguments err))
                     (terpri))))
               (catch (err)
                 (let ((message (or (oget err "message") err)))

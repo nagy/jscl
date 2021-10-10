@@ -47,8 +47,9 @@
         (dolist (x (multiple-value-list (eval sexpr)))
           (format t  "  ~a~%"  x))
         t)
-    (error (msg)
-      (format t "Error: ~a~%" (!condition-args msg))
+    (error (err)
+      (apply #'format t (concat "Error: " (simple-condition-format-control err) "~%")
+        (car (simple-condition-format-arguments err)))
       nil))
   nil)
 
@@ -207,8 +208,9 @@
                (cond (fbundle ((oget code-stor "push") code))
                      (hook ((oget code-stor "push") code))
                      (t t)) ))
-         (error (msg)
-           (format t "Error: ~a~%" (!condition-args msg))
+         (error (err)
+           (apply #'format t (concat "Error: " (simple-condition-format-control err) "~%")
+             (car (simple-condition-format-arguments err)))
            ;; break read-eval loop
            ;; no bundle
            (setq fbundle nil)
