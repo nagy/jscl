@@ -72,7 +72,7 @@
     ((eql fn #'eq)     'eq-hash )
     ((eql fn #'eql)    'eql-hash )
     ((eql fn #'equal)  'equal-hash )
-    (t (error "Incorrect hash function: ~s." test))))
+    (t (error "Incorrect hash function: ~s." fn))))
 
 (defun make-hash-table (&key (test #'eql) size)
   (let ((cell (cons (%select-hash-fn test) (new))))
