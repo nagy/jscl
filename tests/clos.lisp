@@ -328,7 +328,10 @@
              (mapcar (lambda (x) (class-name x)) (class-precedence-list (find-class 'q-clos)))))
 
 
+;;; defmethod without a defgeneric
 
-
+;; We check wether we can use defmethod without having used defgeneric before
+(test (defmethod foo-no-defgeneric ((obj t)) :foo))
+(test (eq (foo-no-defgeneric t) :foo))
 
 ;;; EOF

@@ -36,15 +36,17 @@
 (defmacro defmethod (&rest args)
   (multiple-value-bind (function-name qualifiers lambda-list specializers body)
       (parse-defmethod args)
-    `(let ((gf (find-generic-function ',function-name)))
-       (ensure-method gf
-                      :lambda-list ,(canonicalize-defgeneric-ll lambda-list)
-                      :qualifiers ,(canonicalize-defgeneric-ll qualifiers)
-                      :specializers ,(canonicalize-specializers specializers)
-                      :body ',body
-                      :cmf (compile-method-function ,function-name
-                                                    ,(kludge-arglist lambda-list)
-                                                    ,body)))))
+    `(progn
+       (defgeneric ,function-name ,(nth 1 args))
+       (let ((gf (find-generic-function ',function-name)))
+         (ensure-method gf
+                        :lambda-list ,(canonicalize-defgeneric-ll lambda-list)
+                        :qualifiers ,(canonicalize-defgeneric-ll qualifiers)
+                        :specializers ,(canonicalize-specializers specializers)
+                        :body ',body
+                        :cmf (compile-method-function ,function-name
+                               ,(kludge-arglist lambda-list)
+                               ,body))))))
 
 (defmacro defmethod (&rest args)
   (multiple-value-bind (function-name qualifiers lambda-list specializers body)

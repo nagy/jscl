@@ -210,10 +210,7 @@
 (defparameter *generic-function-table* (make-hash-table :test #'equal))
 
 (defun find-generic-function (symbol &optional (errorp t))
-  (let ((gf (gethash symbol *generic-function-table* nil)))
-    (if (and (null gf) errorp)
-        (error "No generic function named ~S." symbol)
-        gf)))
+  (gethash symbol *generic-function-table* nil))
 
 ;;; @vlad-km
 (defun setf-find-generic-function (symbol new-value)
