@@ -388,7 +388,7 @@
     ((and (consp x) (eq (car x) 'setf))
       (symbol-function (%defun-setf-symbol x)))
     (t
-     (error "Invalid function `~S'." x))))
+      (error 'type-error :datum x :expected-type '(or functionp symbolp)))))
 
 (defun disassemble (function)
   (write-line (lambda-code (fdefinition function)))
