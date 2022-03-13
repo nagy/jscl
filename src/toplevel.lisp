@@ -264,7 +264,7 @@
            ;; 
            ;;   https://reproducible-builds.org/specs/source-date-epoch/
            ;;
-           (or (get-source-data-epoch)
+           (or (get-source-date-epoch)
                (get-universal-time)) ))
       (multiple-value-bind (second minute hour date month year)
           (decode-universal-time build-time)

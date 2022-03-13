@@ -46,7 +46,7 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require :sb-posix))
 
-(defun get-source-data-epoch ()
+(defun get-source-date-epoch ()
   (let (sde)
     #+ccl (setq sde (ccl::getenv "SOURCE_DATE_EPOCH"))
     #+sbcl (setq sde (sb-posix:getenv "SOURCE_DATE_EPOCH"))

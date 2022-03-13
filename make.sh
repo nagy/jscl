@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 BASE=`dirname $0`
 
@@ -15,7 +16,10 @@ done
 shift `expr $OPTIND - 1`
 OPTIND=1
 
-# Unix timestamp of the commit we are building
-export SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)
+export SOURCE_DATE_EPOCH=0
+if [[ -d ${BASE}/.git ]] ; then
+  # Unix timestamp of the commit we are building
+  export SOURCE_DATE_EPOCH=$(git -C $BASE/ show -s --format=%ct HEAD)
+fi
 
-sbcl --load "$BASE/jscl.lisp" --eval "(jscl:bootstrap $VERBOSE)" --eval '(quit)'
+exec sbcl --load "$BASE/jscl.lisp" --eval "(jscl:bootstrap $VERBOSE)" --eval '(quit)'
