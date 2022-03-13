@@ -228,8 +228,20 @@
         ;; *environment* and other critical special variables are
         ;; initialized before we do this.
         (!compile-file "src/toplevel.lisp" out :print verbose)
-        
         (format out "})();~%")))
+
+    ;; Build module variant
+    (with-compilation-environment
+      (with-open-file (out (merge-pathnames "jscl.module.js" *base-directory*)
+                           :direction :output
+                           :if-exists :supersede)
+        (write-string (read-whole-file (source-pathname "prelude.js")) out)
+        (do-source input :target
+          (!compile-file input out :print verbose))
+        (dump-global-environment out)
+        (!compile-file "src/toplevel.lisp" out :print verbose)
+        
+        (format out "export default jscl;~%")))
 
     (report-undefined-functions)
 

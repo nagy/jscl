@@ -3,8 +3,10 @@
   "version": "0.8.2",
   "description": "A Common Lisp implementation for Javascript",
   "main": "jscl.js",
+  "module": "jscl.module.js",
   "files": [
     "jscl.js",
+    "jscl.module.js",
     "jscl-node.js",
     "jscl-deno.js",
     "jscl-web.js"
@@ -16,6 +18,7 @@
     "test": "tests"
   },
   "scripts": {
+    "prepare": "sh make.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
